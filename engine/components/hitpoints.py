@@ -3,6 +3,10 @@ from engine.component import Component
 
 @dataclass
 class Health(Component):
+    """
+    Esta clase representa la cantidad de golpes que
+    la entidad puede soportar antes de ser abatida.
+    """
     __hp: int
     __max_hp: int
 
