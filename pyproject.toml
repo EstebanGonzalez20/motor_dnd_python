@@ -1,0 +1,6 @@
+[project]
+name = "dnd_engine"
+version = "0.1.0"
+
+[tool.setuptools]
+packages = ["engine", "game", "ui", "content"]
