@@ -1,4 +1,4 @@
-from component import Component
+from engine.component import Component
 
 class Entity:
     """
