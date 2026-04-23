@@ -9,7 +9,7 @@ class Map:
     """
     width: int
     height: int
-    entities: dict[Position, Entity]
+    entities: dict[(int, int), Entity]
 
     def distance(self, pos1: Position, pos2: Position) -> int:
         """
