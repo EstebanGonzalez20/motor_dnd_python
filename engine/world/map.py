@@ -9,7 +9,7 @@ class Map:
     """
     width: int
     height: int
-    entities: dict[(int, int), Entity]
+    entities: dict[tuple[Position], Entity]
 
     def distance(self, pos1: Position, pos2: Position) -> int:
         """
@@ -27,19 +27,21 @@ class Map:
     def entities(self):
         return self.entities
 
-    def add_entity(self, position: tuple[int, int], entity: Entity) -> None:
+    def add_entity(self, position: Position, entity: Entity) -> None:
         """
         Agrega una entidad al mapa en un espacio vacío
         """
-        if position not in self.entities.keys():
-            self.entities[position] = entity
+        position_key = tuple(position)
+        if position_key not in self.entities.keys():
+            self.entities[position_key] = entity
 
         else:
             raise ValueError("The entity must be placed in an empty space")
         
-    def remove_entity(self, position: tuple[int, int]) -> None:
-        if position in self.entities.keys():
-            self.entities.pop(position)
+    def remove_entity(self, position: Position) -> None:
+        position_key = tuple(position)
+        if position_key in self.entities.keys():
+            self.entities.pop(position_key)
 
         else:
-            raise ValueError("The position specified does'nt contains an entity")
+            raise ValueError("The position specified doesn't contains an entity")
