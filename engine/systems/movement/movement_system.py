@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from components.position import Position
+from engine.components.position import Position
 from engine.components.speed import Movement
 from engine.world.map import Map
 from engine.entity import Entity
