@@ -25,3 +25,7 @@ class Position(Component):
     @y.setter
     def y(self, value: int):
         self._y = value
+
+    @property
+    def tuple_position(self) -> tuple[int, int]:
+        return (self.x, self.y)
