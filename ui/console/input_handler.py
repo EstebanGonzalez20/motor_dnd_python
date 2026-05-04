@@ -1,17 +1,25 @@
-from game.actions import MoveAction, AttackAction, InfoAction
+from game.actions import Action
 
-def parse_command(text: str):
+def parse_command(text: str) -> Action:
     parts = text.split()
 
     if parts[0] == "move":
-        return MoveAction(
-            entity_id=int(parts[1]),
-            x=int(parts[2]),
-            y=int(parts[3]),
+        return Action(
+            action="move",
+            tile_x=int(parts[1]),
+            tile_y=int(parts[2]),
         )
 
     elif parts[0] == "attack":
-        return AttackAction(
-            attacker_id=int(parts[1]),
-            target_id=int(parts[2]),
+        return Action(
+            action="attack",
+            tile_x=int(parts[1]),
+            tile_y=int(parts[2]),
+        )
+    
+    elif parts[0] == "info":
+        return Action(
+            action="info",
+            tile_x=int(parts[1]),
+            tile_y=int(parts[2]),
         )
