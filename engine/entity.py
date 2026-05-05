@@ -12,9 +12,26 @@ class Entity:
         get: Obtiene un comoponente
         has: Consulta la existencia de un componente
     """
-    def __init__(self, name: str):
+    def __init__(self, id: int, name: str):
+        self._id = id
         self.name = name
         self.components : dict[type, Component] = {}
+
+    @property
+    def id(self):
+        return self._id
+    
+    @id.setter
+    def id(self, new_id: int):
+        if new_id < 0:
+            raise ValueError("The entity id can't be lower than 0")
+        
+        else:
+            self._id = new_id
+
+    @id.deleter
+    def id(self):
+        pass
 
     def add(self, component: Component) -> None:
         """
