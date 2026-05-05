@@ -5,24 +5,40 @@ from engine.world.map import Map
 from engine.entity import Entity
 
 @dataclass
+class MovementResult:
+    result: bool
+    result_message: str
+
+@dataclass
 class MovementSystem:
     """
     Esta clase es la encargadad de mover a la entidades en el mapa.
     """
     def move(self, map: Map, entity: Entity, new_position: Position):
-        pos = entity.get(Position)
+        current_position = entity.get(Position)
         movement = entity.get(Movement)
-        distance = map.distance(pos, new_position)
+        distance = map.distance(current_position, new_position)
 
         if not entity.has(Position) or not entity.has(Movement):
             raise ValueError("Entity must have Position and Movement components to move.")
         
         if distance > movement.remaining:
-            raise ValueError("The entity has not enough movement")
+            return MovementResult(
+                result=False,
+                result_message="The entity has not enough speed"
+            )
         
         if map.is_occupied(new_position):
-            raise ValueError("The entity can't move to an occupied space")
+            return MovementResult(
+                result=False,
+                result_message="The entity can't move to an occupied space"
+            )
 
-        entity.get(Position).x = new_position.x
-        entity.get(Position).y = new_position.y
-        return True
+        else:
+            movement.consume(distance)
+            current_position.x = new_position.x
+            current_position.y = new_position.y
+            return MovementResult(
+                result=True,
+                result_message="The movement was successfully done"
+            )

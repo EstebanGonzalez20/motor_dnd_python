@@ -32,11 +32,7 @@ class GameController:
             new_position
         )
 
-        if not moved:
-            print("No se pudo mover.")
-        
-        else:
-            print("Se ha movido chaval")
+        print(moved.result_message)
     # -----------------------------
 
     # def _handle_attack(self, action: AttackAction):
