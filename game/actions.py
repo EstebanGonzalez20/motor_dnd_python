@@ -1,16 +1,7 @@
 from dataclasses import dataclass
+from typing import Optional
 
 @dataclass
-class MoveAction:
-    entity_id: int
-    x: int
-    y: int
-
-@dataclass
-class AttackAction:
-    attacker_id: int
-    target_id: int
-
-@dataclass
-class InfoAction:
-    grid_space: int
+class Action:
+    type: str
+    target_position: Optional[tuple[int, int]] = None
