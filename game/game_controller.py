@@ -2,7 +2,7 @@ from engine.systems.movement.movement_system import MovementSystem
 #from engine.systems.combat_system import CombatSystem
 from engine.components.position import Position
 
-from .actions import MoveAction, AttackAction
+from .actions import Action
 from .game_state import GameState
 
 
@@ -13,8 +13,8 @@ class GameController:
         #self.combat_system = CombatSystem()
 
     # Punto único de entrada desde la UI
-    def handle(self, action):
-        if isinstance(action, MoveAction):
+    def handle(self, action: Action):
+        if action.type == "move":
             self._handle_move(action)
 
         # elif isinstance(action, AttackAction):
@@ -22,9 +22,9 @@ class GameController:
 
     # -----------------------------
 
-    def _handle_move(self, action: MoveAction):
+    def _handle_move(self, action: Action):
         entity = self.state.get_entity(action.entity_id)
-        new_position = Position(action.x, action.y)
+        new_position = action.target_position
 
         moved = self.movement_system.move(
             self.state.game_map,
