@@ -17,10 +17,13 @@ class Map:
         """
         return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
     
-    def is_occupied(self, position: tuple) -> bool:
+    def is_occupied(self, position: Position | tuple) -> bool:
         """
         Consulta si una posición del mapa esta ocupada
         """
+        if isinstance(position, Position):
+            position = position.tuple_position
+
         return position in self.entities
     
     @property
