@@ -29,10 +29,11 @@ class GameController:
         moved = self.movement_system.move(
             self.state.game_map,
             entity,
-            new_position
+            Position(int(new_position[0]), int(new_position[1]))
         )
 
         print(moved.result_message)
+        input("Press enter to continue... ")
     # -----------------------------
 
     # def _handle_attack(self, action: AttackAction):
