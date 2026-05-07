@@ -7,7 +7,7 @@ def parse_command(text: str):
         return Action(
             type="move",
             target_position=(parts[2], parts[3]),
-            entity_id=parts[1]
+            entity_id=int(parts[1])
 
         )
 
@@ -15,12 +15,12 @@ def parse_command(text: str):
         return Action(
             type="attack",
             target_position=(parts[2], parts[3]),
-            entity_id=parts[1]
+            entity_id=int(parts[1])
         )
     
     elif parts[0] == "info":
         return Action(
             type="info",
             target_position=(parts[2], parts[3]),
-            entity_id=parts[1]
+            entity_id=int(parts[1])
         )
