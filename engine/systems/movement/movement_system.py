@@ -36,8 +36,10 @@ class MovementSystem:
 
         else:
             movement.consume(distance)
+            map.remove_entity(current_position)
             current_position.x = new_position.x
             current_position.y = new_position.y
+            map.add_entity(current_position, entity)
             return MovementResult(
                 result=True,
                 result_message="The movement was successfully done"
