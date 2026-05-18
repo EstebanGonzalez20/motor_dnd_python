@@ -3,14 +3,14 @@ from enum import auto, StrEnum
 from engine.component import Component
  
 class ActionType(StrEnum):
-    ACTION       = auto()
+    ACTION = auto()
     BONUS_ACTION = auto()
-    REACTION     = auto()
-    MOVEMENT     = auto()
-    OBJECT       = auto()
-    MAGIC        = auto()
-    LEGENDARY    = auto()
-    LAIR         = auto()
+    REACTION = auto()
+    MOVEMENT = auto()
+    OBJECT = auto()
+    MAGIC = auto()
+    LEGENDARY = auto()
+    LAIR = auto()
  
 @dataclass
 class ActionPool:
@@ -22,11 +22,11 @@ class ActionPool:
     def __post_init__(self):
         self.current = self.max
  
-    def spend(self, amount: int = 1) -> bool:
+    def spend(self, amount: int = 1) -> None:
         if self.current < amount:
-            return False
+            raise ValueError("The amount value can't be greater than the current value")
+        
         self.current -= amount
-        return True
  
     def reset(self) -> None:
         self.current = self.max
@@ -51,21 +51,21 @@ class ActionEconomy(Component):
         object_interactions: int = 1,
     ) -> "ActionEconomy":
         economy = ActionEconomy()
-        economy.grant(ActionType.ACTION,       actions)
+        economy.grant(ActionType.ACTION, actions)
         economy.grant(ActionType.BONUS_ACTION, bonus_actions)
-        economy.grant(ActionType.REACTION,     reactions,            resets_on_turn=False)
-        economy.grant(ActionType.MOVEMENT,     movement)
-        economy.grant(ActionType.OBJECT,       object_interactions)
+        economy.grant(ActionType.REACTION, reactions)
+        economy.grant(ActionType.MOVEMENT, movement)
+        economy.grant(ActionType.OBJECT, object_interactions)
         return economy
  
     # -- Setup --------------------------------------------------------
  
-    def grant(self, action_type: ActionType, amount: int = 1,
-              resets_on_turn: bool = True) -> None:
+    def grant(self, action_type: ActionType, amount: int = 1, resets_on_turn: bool = True) -> None:
         """Agrega o incrementa un pool de acciones."""
         if action_type in self._pools:
             self._pools[action_type].max     += amount
             self._pools[action_type].current += amount
+
         else:
             self._pools[action_type] = ActionPool(
                 max=amount,
@@ -97,7 +97,8 @@ class ActionEconomy(Component):
     def spend(self, action_type: ActionType, amount: int = 1) -> bool:
         pool = self._pools.get(action_type)
         if pool is None:
-            return False
+            raise ValueError(f"The entity doesn't have {action_type} action")
+        
         return pool.spend(amount)
  
     # -- Reset --------------------------------------------------------
@@ -108,8 +109,8 @@ class ActionEconomy(Component):
             if pool.resets_on_turn:
                 pool.reset()
  
-    def reset_reaction(self) -> None:
-        """Resetea lo que se renueva entre turnos (reacción, legendarias)."""
+    def reset_off_turn(self) -> None:
+        """Resetea lo que se renueva entre turnos (legendarias)."""
         for pool in self._pools.values():
             if not pool.resets_on_turn:
                 pool.reset()
