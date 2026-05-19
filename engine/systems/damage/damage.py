@@ -1,6 +1,6 @@
 from enum import Enum, auto
 from dataclasses import dataclass, field
-from utils.dice import Dice
+from utils.dice import Dice, DiceRoll
 
 class DamageType(Enum):
     SLASHING = auto()
@@ -18,14 +18,16 @@ class DamageType(Enum):
     FORCE = auto()
 
 @dataclass
-class DamageRoll:
+class DamageRoll(DiceRoll):
     damage_type: DamageType
-    dice: Dice
-    number_of_dice: int = 1
-
-    def roll(self, critical: bool = False) -> int:
-        rolls = self.number_of_dice * (2 if critical else 1)
-        return sum(self.dice.roll() for _ in range(rolls))
+    
+    def critical_roll(self, max: bool = False) -> int:
+        if max:
+            return self.dice.max_roll() + self.number_of_dice * 2
+        
+        else:
+            rolls = self.number_of_dice * 2
+            return sum(self.dice.roll() for _ in range(rolls))
 
 @dataclass
 class Damage:
