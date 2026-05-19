@@ -38,7 +38,7 @@ class DiceRoll:
         return sum(self.dice.roll() for _ in range(self.number_of_dice))
     
     def max_roll(self) -> int:
-        return self.dice.max_roll * self.number_of_dice
+        return self.dice.max_roll() * self.number_of_dice
 
 d4 = Dice(4)
 d6 = Dice(6)
