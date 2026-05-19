@@ -15,20 +15,11 @@ class ActionSystem:
         return entity.get(ActionEconomy).has(action_type)
  
     @staticmethod
-    def perform(entity: Entity, action_type: ActionType, action_fn: Callable[..., Any], *args, **kwargs,) -> Any:
+    def perform(entity: Entity, action_type: ActionType) -> Any:
         """
         Gasta la acción y ejecuta action_fn si hay recursos disponibles.
         Lanza ValueError si la entidad no tiene la acción disponible.
         """
+
         economy = entity.get(ActionEconomy)
-        
-        if economy is None:
-            raise ValueError(f"'{entity.name}' doesn't have an ActionEconomy component")
- 
-        if not economy.spend(action_type):
-            raise ValueError(
-                f"'{entity.name}' no tiene {action_type} disponible "
-                f"(restantes: {economy.remaining(action_type)})"
-            )
- 
-        return action_fn(*args, **kwargs)
+        economy.spend(action_type)

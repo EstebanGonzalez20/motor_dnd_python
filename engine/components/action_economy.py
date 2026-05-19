@@ -6,7 +6,6 @@ class ActionType(StrEnum):
     ACTION = auto()
     BONUS_ACTION = auto()
     REACTION = auto()
-    MOVEMENT = auto()
     OBJECT = auto()
     MAGIC = auto()
     LEGENDARY = auto()
@@ -54,7 +53,6 @@ class ActionEconomy(Component):
         economy.grant(ActionType.ACTION, actions)
         economy.grant(ActionType.BONUS_ACTION, bonus_actions)
         economy.grant(ActionType.REACTION, reactions)
-        economy.grant(ActionType.MOVEMENT, movement)
         economy.grant(ActionType.OBJECT, object_interactions)
         return economy
  
