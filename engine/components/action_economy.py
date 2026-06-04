@@ -46,7 +46,6 @@ class ActionEconomy(Component):
         actions: int = 1,
         bonus_actions: int = 1,
         reactions: int = 1,
-        movement: int = 1,
         object_interactions: int = 1,
     ) -> "ActionEconomy":
         economy = ActionEconomy()
@@ -61,7 +60,7 @@ class ActionEconomy(Component):
     def grant(self, action_type: ActionType, amount: int = 1, resets_on_turn: bool = True) -> None:
         """Agrega o incrementa un pool de acciones."""
         if action_type in self._pools:
-            self._pools[action_type].max     += amount
+            self._pools[action_type].max += amount
             self._pools[action_type].current += amount
 
         else:
@@ -75,7 +74,7 @@ class ActionEconomy(Component):
         pool = self._pools.get(action_type)
         if pool is None:
             return
-        pool.max     = max(0, pool.max - amount)
+        pool.max = max(0, pool.max - amount)
         pool.current = min(pool.current, pool.max)
         if pool.max == 0:
             del self._pools[action_type]

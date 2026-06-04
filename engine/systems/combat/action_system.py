@@ -15,11 +15,9 @@ class ActionSystem:
         return entity.get(ActionEconomy).has(action_type)
  
     @staticmethod
-    def perform(entity: Entity, action_type: ActionType) -> Any:
+    def spend(entity: Entity, action_type: ActionType) -> Any:
         """
-        Gasta la acción y ejecuta action_fn si hay recursos disponibles.
-        Lanza ValueError si la entidad no tiene la acción disponible.
+        Gasta el tipo de acción a la entidad específicada
         """
-
-        economy = entity.get(ActionEconomy)
+        economy : ActionEconomy = entity.get(ActionEconomy)
         economy.spend(action_type)

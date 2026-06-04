@@ -15,10 +15,11 @@ class AttackSystem:
     @staticmethod
     def attack_roll(attacker: Entity, target: Entity) -> AttackResult:
         abilities: Abilities = attacker.get(Abilities)
-        roll = d20.roll() + abilities.modifier(Ability.STRENGTH)
+        roll : int = d20.roll()
+        result : int = roll + abilities.modifier(Ability.STRENGTH)
+        armorclass : ArmorClass = target.get(ArmorClass)
 
         return AttackResult(
-            hit= roll >= target.get(ArmorClass).value,
-            crit= roll == 20
+            hit = result >= armorclass.value ,
+            crit = roll == 20
         )
-
